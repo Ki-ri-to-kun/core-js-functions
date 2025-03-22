@@ -92,7 +92,7 @@ function getPolynom(...args) {
 
   return (x) => {
     let result = 0;
-    for (let i = 0; i < args.length; i++) {
+    for (let i = 0; i < args.length; i += 1) {
       result += args[i] * x ** (args.length - 1 - i);
     }
     return result;
@@ -113,8 +113,18 @@ function getPolynom(...args) {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+ const cache = new Map(); 
+
+  return function(arg) {
+    if (cache.has(arg)) {
+      return cache.get(arg);
+    } else {
+      const result = func(arg);
+      cache.set(arg, result);
+      return result;
+    }
+  };
 }
 
 /**
